@@ -1,24 +1,34 @@
-const w = 500;
+const w = 600;
 const h = 500;
-const padding = 60;
+const padding = 10;
 
 const svg = d3.select('body').append('svg').attr('width',w).attr('height',h)
 
-const scale = d3.scaleLinear()
-const output = scale(50)
+
+
 
 fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json')
 .then(response => response.json())
 .then(data => {
-    var two = data.data.map(function(item){
-        return (item[1])
+    var info = data.data.map(function(item){
+        return (item)   
     })
-   svg.selectAll('rect').data(two).enter().append('rect')
-   .attr('x',(d, i) => { return i * 6})
-   .attr('y',(d, i ) => {return h - d * 3})
-   .attr('width',5)
-   .attr('height',(d, i )=>{return d * 3})
+
+const xScale = d3.scaleBand().range([0, w]).domain(info.map((d)=>d[0]))
+const yScale = d3.scaleLinear().range([h, 0]).domain([0, d3.max(info,(d) => d[1])])
+
+svg.selectAll('rect').data(info).enter().append('rect')
+.attr('x',(d) => xScale(d[0]))
+.attr('y',(d) => yScale(d[1]))
+.attr('width',5)
+.attr('height',(d) => h - yScale(d[1]))
 })
+
+//    svg.selectAll('rect').data(product).enter().append('rect')
+//    .attr('x',(d, i) => { return i * 6})
+//    .attr('y',(d, i ) => {return h - d * 3})
+//    .attr('width',5)
+//    .attr('height',(d, i )=>{return d * 3})
 
 
 
