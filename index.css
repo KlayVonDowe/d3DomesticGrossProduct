@@ -1,0 +1,13 @@
+.bar:hover{
+    fill: rgb(14, 12, 12) !important;
+}
+#x-axis path{
+    stroke-width: 1;
+    fill: none;
+    stroke: black;
+}
+#center{
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
