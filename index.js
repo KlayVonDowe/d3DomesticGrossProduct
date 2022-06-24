@@ -40,6 +40,7 @@ const axisTwo = d3.axisLeft(yaxis);
 svg.append('g').call(axisTwo).attr('transform','translate(60, 0)')
 svg.append('g').call(axis).attr('transform','translate(0,' + (h)+')')
 })
+
 //hover
 
 
