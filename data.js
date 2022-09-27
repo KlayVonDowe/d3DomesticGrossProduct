@@ -22,15 +22,37 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
     const xScale = d3.scaleBand().domain(GDP.map((d) => d[0])).range([0+p,w])
     const yScale = d3.scaleLinear().domain([0,d3.max(GDP,(d) => d[1])]).range([h, 0])
     
-    svg.selectAll('rect').data(GDP).enter().append('rect').attr('x',(d) => xScale(d[0]))
-    .attr('y',(d) => yScale(d[1])).attr('height',(d) => h - yScale(d[1])).attr('width', 2.5)
-    .attr('fill','teal').attr('border','3px solid black')
+    svg.selectAll('rect').data(GDP).enter().append('rect')
+    .attr('x',(d) => xScale(d[0]))
+    .attr('y',(d) => yScale(d[1]))
+    .attr('height',(d) => h - yScale(d[1])).attr('width', 2.5)
+    .attr('fill','teal').attr('border','3px solid black').attr('class','bar')
+    .attr('data-date', function (d) {
+      return d[0];
+    }).attr('data-gdp', function (d) {
+      return d[1];
+    })
+    .append('title').attr('id','tooltip').text((d) => d)
+    
 
-    const xAxis = d3.scaleTime().domain([d3.min(year) , d3.max(year)]).range([0, w])
+    d3.select('svg')
+      .selectAll('rect')
+      .data(GDP)
+      .enter()
+      .append('rect')
+      .attr('data-date', function (d) {
+        return d[0];
+      }).attr('data-gdp', function (d) {
+        return d[1];
+      }).attr('x',(d) => xScale(d[0]))
+      .attr('y',(d) => yScale(d[1])).attr('height',(d) => h - yScale(d[1])).attr('width', 2.5)
+
+    const xAxis = d3.scaleTime().domain([d3.min(year) , d3.max(year)]).range([0, w-p])
     const yAxis = d3.scaleLinear().domain([0,d3.max(product)]).range([h,0])
     const bottomAxis =d3.axisBottom(xAxis);
     const leftAxis = d3.axisLeft(yAxis);
-    svg.append('g').call(bottomAxis).attr('transform','translate(60,' + h  + ')')
-    svg.append('g').call(leftAxis).attr('transform','translate(60,0)')
+    svg.append('g').call(bottomAxis).attr('transform','translate(60,' + (500)  + ')').attr('id','x-axis')
+    svg.append('g').call(leftAxis).attr('transform','translate(60,0)').attr('id','y-axis')
 
+    svg.selectAll('rect').attr('id','tooltip')
 })

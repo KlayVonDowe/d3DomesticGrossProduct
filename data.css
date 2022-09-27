@@ -11,6 +11,10 @@ display: block;
 margin: 0 auto;
 
 }
-.vector{
-
+#tooltip:hover{
+fill: black;
+}
+#title{
+    text-align: center;
+    font-size: larger;
 }
