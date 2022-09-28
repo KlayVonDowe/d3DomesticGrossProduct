@@ -2,7 +2,7 @@ const w = 800;
 const h = 500;
 const p = 60;
 
-const svg = d3.select('body').append('svg').attr('height',h + p).attr('width',w + p).attr('class','graph')
+const svg = d3.select('body').append('svg').attr('height',h + p).attr('width',w + p).attr('class','graph').style('padding',p)
 
 fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json')
 .then(response => response.json())
@@ -32,20 +32,29 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
     }).attr('data-gdp', function (d) {
       return d[1];
     })
-    .append('title').attr('id','tooltip').text((d) => d)
+    .on("mouseover", function(d){
+      tooltip
+        .style("left", d3.event.pageX - 100 + "px")
+        .style("top", d3.event.pageY - 80 + "px")
+        .style("display", "inline-block")
+        .html("Date: "+d[0])
+        .attr("data-date",d[0]);
+   }).on("mouseout", function(d){ tooltip.style("display", "none");});
     
+   svg.append("text")
+    .attr("class", "y label")
+    .attr("text-anchor", "middle")
+    .attr("y", 0)
+    .attr('x',-250)
+    .attr("dy", ".75em")
+    .attr("transform", "rotate(-90)")
+    .text("GDP");
 
-    d3.select('svg')
-      .selectAll('rect')
-      .data(GDP)
-      .enter()
-      .append('rect')
-      .attr('data-date', function (d) {
-        return d[0];
-      }).attr('data-gdp', function (d) {
-        return d[1];
-      }).attr('x',(d) => xScale(d[0]))
-      .attr('y',(d) => yScale(d[1])).attr('height',(d) => h - yScale(d[1])).attr('width', 2.5)
+    svg.append('text')
+    .attr('text-anchor', 'middle')
+    .attr('x',400)
+    .attr('y', 550)
+    .text('Years')
 
     const xAxis = d3.scaleTime().domain([d3.min(year) , d3.max(year)]).range([0, w-p])
     const yAxis = d3.scaleLinear().domain([0,d3.max(product)]).range([h,0])
@@ -54,5 +63,11 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
     svg.append('g').call(bottomAxis).attr('transform','translate(60,' + (500)  + ')').attr('id','x-axis')
     svg.append('g').call(leftAxis).attr('transform','translate(60,0)').attr('id','y-axis')
 
-    svg.selectAll('rect').attr('id','tooltip')
+    var tooltip = d3.select("body")
+              .append("div")
+              .attr("class", "toolTip")
+              .attr("id","tooltip");
+
+
+
 })

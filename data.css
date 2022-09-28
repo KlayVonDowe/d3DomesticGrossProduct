@@ -18,3 +18,15 @@ fill: black;
     text-align: center;
     font-size: larger;
 }
+#tooltip {
+   
+    position: absolute;
+    text-align: center;
+    margin: 30px;
+    padding: 10px;
+    font: 12px;
+    background-color: rgb(125, 121, 121);
+    opacity: 0.7;
+    border: 2px black solid;
+    
+}
