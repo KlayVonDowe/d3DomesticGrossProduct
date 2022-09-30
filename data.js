@@ -1,8 +1,8 @@
-const w = 800;
+const w = 600;
 const h = 500;
 const p = 60;
 
-const svg = d3.select('body').append('svg').attr('height',h + p).attr('width',w + p).attr('class','graph').style('padding',p)
+const svg = d3.select('body').append('svg').attr('height',h +p).attr('width',w + p).attr('class','graph').style('padding',p)
 
 fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json')
 .then(response => response.json())
@@ -22,6 +22,8 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
     const xScale = d3.scaleBand().domain(GDP.map((d) => d[0])).range([0+p,w])
     const yScale = d3.scaleLinear().domain([0,d3.max(GDP,(d) => d[1])]).range([h, 0])
     
+console.log(xScale)
+
     svg.selectAll('rect').data(GDP).enter().append('rect')
     .attr('x',(d) => xScale(d[0]))
     .attr('y',(d) => yScale(d[1]))
@@ -52,9 +54,17 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
 
     svg.append('text')
     .attr('text-anchor', 'middle')
-    .attr('x',400)
-    .attr('y', 550)
+    .attr('x',350)
+    .attr('y', 530)
     .text('Years')
+
+    svg.append('text')
+    .attr('Title', 'middle')
+    .attr('text-anchor', 'middle')
+    .attr('x',350)
+    .attr('y', 10)
+    .text('United States GDP')
+    
 
     const xAxis = d3.scaleTime().domain([d3.min(year) , d3.max(year)]).range([0, w-p])
     const yAxis = d3.scaleLinear().domain([0,d3.max(product)]).range([h,0])

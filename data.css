@@ -1,6 +1,6 @@
 *{
-    margin: 0;
-    padding:0;
+    margin: 0 !important;
+    padding:0 !important;
 }
 body{
     background-color: peachpuff;
@@ -8,7 +8,8 @@ body{
 
 svg{
 display: block;
-margin: 0 auto;
+margin: 0 auto !important;
+border: 2px solid black;
 
 }
 #tooltip:hover{
@@ -29,4 +30,8 @@ fill: black;
     opacity: 0.7;
     border: 2px black solid;
     
+}
+
+.graph{
+    padding-top: 50px !important;
 }
